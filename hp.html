@@ -1,1142 +1,1169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-* {
-  box-sizing: border-box;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  background-color: black;
-  border: 4px solid white;
-  font-family: Helvetica, sans-serif;
-}
+    body {
+      background-color: black;
+      border: 4px solid white;
+      font-family: Helvetica, sans-serif;
+    }
 
-/* The actual timeline (the vertical ruler) */
-.timeline {
-  position: relative;
-  max-width: auto;
-  margin: 0 auto ;
-}
+    /* The actual timeline (the vertical ruler) */
+    .timeline {
+      position: relative;
+      max-width: auto;
+      margin: 0 auto;
+    }
 
-/* The actual timeline (the vertical ruler) */
-.timeline::after {
-  content: '';
-  position: absolute;
-  width: 7px;
-  background-color: white;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -3px;
-}
+    /* The actual timeline (the vertical ruler) */
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      background-color: white;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
 
-/* Container around content */
-.container {
-  padding: 10px 40px;
-  position: relative;
-  background-color: inherit;
-  width: 50%;
-}
+    /* Container around content */
+    .container {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
 
-/* The circles on the timeline */
-.container::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  right: -17px;
-  background-color: red;
-  border: 4px solid red;
-  top: 15px;
-  border-radius: 50%;
-  z-index: 1;
-}
+    /* The circles on the timeline */
+    .container::after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      right: -17px;
+      background-color: red;
+      border: 4px solid red;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
 
-/* Place the container to the left */
-.left {
-  left: 0;
-}
+    /* Place the container to the left */
+    .left {
+      left: 0;
+    }
 
-/* Place the container to the right */
-.right {
-  left: 50%;
-}
+    /* Place the container to the right */
+    .right {
+      left: 50%;
+    }
 
-/* Add arrows to the left container (pointing right) */
-.left::before {
-  content: " ";
-  height: 0;
-  position: absolute;
-  top: 22px;
-  width: 0;
-  z-index: 1;
-  right: 30px;
-  border: medium solid white;
-  border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent white;
-}
+    /* Add arrows to the left container (pointing right) */
+    .left::before {
+      content: " ";
+      height: 0;
+      position: absolute;
+      top: 22px;
+      width: 0;
+      z-index: 1;
+      right: 30px;
+      border: medium solid white;
+      border-width: 10px 0 10px 10px;
+      border-color: transparent transparent transparent white;
+    }
 
-/* Add arrows to the right container (pointing left) */
-.right::before {
-  content: " ";
-  height: 0;
-  position: absolute;
-  top: 22px;
-  width: 0;
-  z-index: 1;
-  left: 30px;
-  border: medium solid white;
-  border-width: 10px 10px 10px 0;
-  border-color: transparent white transparent transparent;
-}
+    /* Add arrows to the right container (pointing left) */
+    .right::before {
+      content: " ";
+      height: 0;
+      position: absolute;
+      top: 22px;
+      width: 0;
+      z-index: 1;
+      left: 30px;
+      border: medium solid white;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent white transparent transparent;
+    }
 
-/* Fix the circle for containers on the right side */
-.right::after {
-  left: -16px;
-}
+    /* Fix the circle for containers on the right side */
+    .right::after {
+      left: -16px;
+    }
 
-/* The actual content */
-.content {
-  padding: 20px 30px;
-  background-color: white;
-  position: relative;
-  border-radius: 6px;
-}
-img {
-  border: 0px solid black;
-  width: 150px;
-  height: 200px;
-}
+    /* The actual content */
+    .content {
+      padding: 20px 30px;
+      background-color: white;
+      position: relative;
+      border-radius: 6px;
+    }
 
-img:hover {
-  box-shadow: 0 0 3px 3px black;
-}
+    img {
+      border: 0px solid black;
+      width: 150px;
+      height: 200px;
+    }
 
-/* Media queries - Responsive timeline on screens less than 600px wide */
-@media screen and (max-width: 600px) {
-  /* Place the timelime to the left */
-  .timeline::after {
-  left: 31px;
-  }
-  
-  /* Full-width containers */
-  .container {
-  width: 100%;
-  padding-left: 70px;
-  padding-right: 25px;
-  }
-  
-  /* Make sure that all arrows are pointing leftwards */
-  .container::before {
-  left: 60px;
-  border: medium solid white;
-  border-width: 10px 10px 10px 0;
-  border-color: transparent white transparent transparent;
-  }
+    img:hover {
+      box-shadow: 0 0 3px 3px black;
+    }
 
-  /* Make sure all circles are at the same spot */
-  .left::after, .right::after {
-  left: 15px;
-  }
-  
-  /* Make all right containers behave like the left ones */
-  .right {
-  left: 0%;
-  }
-}
-</style>
-    <title>Document</title>
+    /* Media queries - Responsive timeline on screens less than 600px wide */
+    @media screen and (max-width: 600px) {
+
+      /* Place the timelime to the left */
+      .timeline::after {
+        left: 31px;
+      }
+
+      /* Full-width containers */
+      .container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      /* Make sure that all arrows are pointing leftwards */
+      .container::before {
+        left: 60px;
+        border: medium solid white;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+      }
+
+      /* Make sure all circles are at the same spot */
+      .left::after,
+      .right::after {
+        left: 15px;
+      }
+
+      /* Make all right containers behave like the left ones */
+      .right {
+        left: 0%;
+      }
+    }
+  </style>
+  <title>Document</title>
 </head>
+
 <body>
-    <body>
 
-        <div class="timeline">
-          <div class="container left">
-            <div class="content">
-              <h2>i just love you very very much....</h2>
-              <a target="_blank" href="Mo chuisle pics/my fav.jpg">
-                <img src="Mo chuisle pics/my fav.jpg" alt="1" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>your smile my life....</h2>
-              <a target="_blank" href="Mo chuisle pics/smile/1.jpg">
-                <img src="Mo chuisle pics/smile/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/2.jpg">
-                <img src="Mo chuisle pics/smile/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/3.jpg">
-                <img src="Mo chuisle pics/smile/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/4.jpg">
-                <img src="Mo chuisle pics/smile/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/5.jpg">
-                <img src="Mo chuisle pics/smile/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/6.jpg">
-                <img src="Mo chuisle pics/smile/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/7.jpg">
-                <img src="Mo chuisle pics/smile/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/8.jpg">
-                <img src="Mo chuisle pics/smile/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/9.jpg">
-                <img src="Mo chuisle pics/smile/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/10.jpg">
-                <img src="Mo chuisle pics/smile/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/11.jpg">
-                <img src="Mo chuisle pics/smile/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/12.jpg">
-                <img src="Mo chuisle pics/smile/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/13.jpg">
-                <img src="Mo chuisle pics/smile/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/14.jpg">
-                <img src="Mo chuisle pics/smile/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/15.jpg">
-                <img src="Mo chuisle pics/smile/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/16.jpg">
-                <img src="Mo chuisle pics/smile/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/17.jpg">
-                <img src="Mo chuisle pics/smile/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/18.jpg">
-                <img src="Mo chuisle pics/smile/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/19.jpg">
-                <img src="Mo chuisle pics/smile/19.jpg" alt="19" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/20.jpg">
-                <img src="Mo chuisle pics/smile/20.jpg" alt="20" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/21.jpg">
-                <img src="Mo chuisle pics/smile/21.jpg" alt="21" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/22.jpg">
-                <img src="Mo chuisle pics/smile/22.jpg" alt="22" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/23.jpg">
-                <img src="Mo chuisle pics/smile/23.jpg" alt="23" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/24.jpg">
-                <img src="Mo chuisle pics/smile/24.jpg" alt="24" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/25.jpg">
-                <img src="Mo chuisle pics/smile/25.jpg" alt="25" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/26.jpg">
-                <img src="Mo chuisle pics/smile/26.jpg" alt="26" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/27.jpg">
-                <img src="Mo chuisle pics/smile/27.jpg" alt="27" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/28.jpg">
-                <img src="Mo chuisle pics/smile/28.jpg" alt="28" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/29.jpg">
-                <img src="Mo chuisle pics/smile/29.jpg" alt="29" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/30.jpg">
-                <img src="Mo chuisle pics/smile/30.jpg" alt="30" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/31.jpg">
-                <img src="Mo chuisle pics/smile/31.jpg" alt="31" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/32.jpg">
-                <img src="Mo chuisle pics/smile/32.jpg" alt="32" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/33.jpg">
-                <img src="Mo chuisle pics/smile/33.jpg" alt="33" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/34.jpg">
-                <img src="Mo chuisle pics/smile/34.jpg" alt="34" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile/35.jpg">
-                <img src="Mo chuisle pics/smile/35.jpg" alt="35" >
-              </a>
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>Meri jaan before coming to my life....</h2>
-              <a target="_blank" href="Mo chuisle pics/before me/1.jpg">
-                <img src="Mo chuisle pics/before me/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/2.jpg">
-                <img src="Mo chuisle pics/before me/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/3.jpg">
-                <img src="Mo chuisle pics/before me/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/4.jpg">
-                <img src="Mo chuisle pics/before me/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/5.jpg">
-                <img src="Mo chuisle pics/before me/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/6.jpg">
-                <img src="Mo chuisle pics/before me/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/7.jpg">
-                <img src="Mo chuisle pics/before me/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/8.jpg">
-                <img src="Mo chuisle pics/before me/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/9.jpg">
-                <img src="Mo chuisle pics/before me/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/10.jpg">
-                <img src="Mo chuisle pics/before me/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/11.jpg">
-                <img src="Mo chuisle pics/before me/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/12.jpg">
-                <img src="Mo chuisle pics/before me/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/13.jpg">
-                <img src="Mo chuisle pics/before me/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/14.jpg">
-                <img src="Mo chuisle pics/before me/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/15.jpg">
-                <img src="Mo chuisle pics/before me/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/before me/16.jpg">
-                <img src="Mo chuisle pics/before me/16.jpg" alt="16" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>O my octopus....</h2>
-              <a target="_blank" href="Mo chuisle pics/my octopus/1.jpg">
-                <img src="Mo chuisle pics/my octopus/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/2.jpg">
-                <img src="Mo chuisle pics/my octopus/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/3.jpg">
-                <img src="Mo chuisle pics/my octopus/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/4.jpg">
-                <img src="Mo chuisle pics/my octopus/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/5.jpg">
-                <img src="Mo chuisle pics/my octopus/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/6.jpg">
-                <img src="Mo chuisle pics/my octopus/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/7.jpg">
-                <img src="Mo chuisle pics/my octopus/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/8.jpg">
-                <img src="Mo chuisle pics/my octopus/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my octopus/9.jpg">
-                <img src="Mo chuisle pics/my octopus/9.jpg" alt="9" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>Your paintings....</h2>
-              <a target="_blank" href="Mo chuisle pics/painting/1.jpg">
-                <img src="Mo chuisle pics/painting/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/2.jpg">
-                <img src="Mo chuisle pics/painting/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/3.jpg">
-                <img src="Mo chuisle pics/painting/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/4.jpg">
-                <img src="Mo chuisle pics/painting/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/5.jpg">
-                <img src="Mo chuisle pics/painting/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/6.jpg">
-                <img src="Mo chuisle pics/painting/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/7.jpg">
-                <img src="Mo chuisle pics/painting/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/8.jpg">
-                <img src="Mo chuisle pics/painting/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/9.jpg">
-                <img src="Mo chuisle pics/painting/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/10.jpg">
-                <img src="Mo chuisle pics/painting/10.jpg" alt="10">
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/11.jpg">
-                <img src="Mo chuisle pics/painting/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/12.jpg">
-                <img src="Mo chuisle pics/painting/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/13.jpg">
-                <img src="Mo chuisle pics/painting/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/14.jpg">
-                <img src="Mo chuisle pics/painting/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/15.jpg">
-                <img src="Mo chuisle pics/painting/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/16.jpg">
-                <img src="Mo chuisle pics/painting/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/17.jpg">
-                <img src="Mo chuisle pics/painting/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/painting/18.jpg">
-                <img src="Mo chuisle pics/painting/18.jpg" alt="18" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>my babe wet in the rain....</h2>
-              <a target="_blank" href="Mo chuisle pics/raining/1.jpg">
-                <img src="Mo chuisle pics/raining/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/2.jpg">
-                <img src="Mo chuisle pics/raining/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/3.jpg">
-                <img src="Mo chuisle pics/raining/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/4.jpg">
-                <img src="Mo chuisle pics/raining/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/5.jpg">
-                <img src="Mo chuisle pics/raining/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/6.jpg">
-                <img src="Mo chuisle pics/raining/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/7.jpg">
-                <img src="Mo chuisle pics/raining/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/8.jpg">
-                <img src="Mo chuisle pics/raining/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/raining/9.jpg">
-                <img src="Mo chuisle pics/raining/9.jpg" alt="9" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>loving in the auto....</h2>
-              <a target="_blank" href="Mo chuisle pics/auto makeover/1.jpg">
-                <img src="Mo chuisle pics/auto makeover/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/auto makeover/2.jpg">
-                <img src="Mo chuisle pics/auto makeover/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/auto makeover/3.jpg">
-                <img src="Mo chuisle pics/auto makeover/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/auto makeover/4.jpg">
-                <img src="Mo chuisle pics/auto makeover/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/auto makeover/5.jpg">
-                <img src="Mo chuisle pics/auto makeover/5.jpg" alt="5" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>first kiss moments....</h2>
-              <a target="_blank" href="Mo chuisle pics/first kiss/1.jpg">
-                <img src="Mo chuisle pics/first kiss/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/first kiss/2.jpg">
-                <img src="Mo chuisle pics/first kiss/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/first kiss/3.jpg">
-                <img src="Mo chuisle pics/first kiss/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/first kiss/4.jpg">
-                <img src="Mo chuisle pics/first kiss/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/first kiss/5.jpg">
-                <img src="Mo chuisle pics/first kiss/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/first kiss/6.jpg">
-                <img src="Mo chuisle pics/first kiss/6.jpg" alt="6" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>so my babe did my haircut today....</h2>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/1.jpg">
-                <img src="Mo chuisle pics/my haiorcut/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/2.jpg">
-                <img src="Mo chuisle pics/my haiorcut/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/3.jpg">
-                <img src="Mo chuisle pics/my haiorcut/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/4.jpg">
-                <img src="Mo chuisle pics/my haiorcut/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/5.jpg">
-                <img src="Mo chuisle pics/my haiorcut/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/6.jpg">
-                <img src="Mo chuisle pics/my haiorcut/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/7.jpg">
-                <img src="Mo chuisle pics/my haiorcut/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/8.jpg">
-                <img src="Mo chuisle pics/my haiorcut/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/9.jpg">
-                <img src="Mo chuisle pics/my haiorcut/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/10.jpg">
-                <img src="Mo chuisle pics/my haiorcut/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/11.jpg">
-                <img src="Mo chuisle pics/my haiorcut/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/12.jpg">
-                <img src="Mo chuisle pics/my haiorcut/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/13.jpg">
-                <img src="Mo chuisle pics/my haiorcut/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/14.jpg">
-                <img src="Mo chuisle pics/my haiorcut/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/15.jpg">
-                <img src="Mo chuisle pics/my haiorcut/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/16.jpg">
-                <img src="Mo chuisle pics/my haiorcut/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/17.jpg">
-                <img src="Mo chuisle pics/my haiorcut/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/18.jpg">
-                <img src="Mo chuisle pics/my haiorcut/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/my haiorcut/19.jpg">
-                <img src="Mo chuisle pics/my haiorcut/19.jpg" alt="19" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>i will never find someone as crazy as you....</h2>
-              <a target="_blank" href="Mo chuisle pics/crazy one/1.jpg">
-                <img src="Mo chuisle pics/crazy one/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/2.jpg">
-                <img src="Mo chuisle pics/crazy one/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/3.jpg">
-                <img src="Mo chuisle pics/crazy one/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/4.jpg">
-                <img src="Mo chuisle pics/crazy one/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/5.jpg">
-                <img src="Mo chuisle pics/crazy one/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/6.jpg">
-                <img src="Mo chuisle pics/crazy one/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/7.jpg">
-                <img src="Mo chuisle pics/crazy one/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/8.jpg">
-                <img src="Mo chuisle pics/crazy one/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/9.jpg">
-                <img src="Mo chuisle pics/crazy one/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/10.jpg">
-                <img src="Mo chuisle pics/crazy one/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/11.jpg">
-                <img src="Mo chuisle pics/crazy one/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/12.jpg">
-                <img src="Mo chuisle pics/crazy one/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/13.jpg">
-                <img src="Mo chuisle pics/crazy one/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/14.jpg">
-                <img src="Mo chuisle pics/crazy one/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/15.jpg">
-                <img src="Mo chuisle pics/crazy one/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/16.jpg">
-                <img src="Mo chuisle pics/crazy one/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/17.jpg">
-                <img src="Mo chuisle pics/crazy one/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/18.jpg">
-                <img src="Mo chuisle pics/crazy one/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/19.jpg">
-                <img src="Mo chuisle pics/crazy one/19.jpg" alt="19" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/20.jpg">
-                <img src="Mo chuisle pics/crazy one/20.jpg" alt="20" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/21.jpg">
-                <img src="Mo chuisle pics/crazy one/21.jpg" alt="21" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/22.jpg">
-                <img src="Mo chuisle pics/crazy one/22.jpg" alt="22" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/23.jpg">
-                <img src="Mo chuisle pics/crazy one/23.jpg" alt="23" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/24.jpg">
-                <img src="Mo chuisle pics/crazy one/24.jpg" alt="24" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/25.jpg">
-                <img src="Mo chuisle pics/crazy one/25.jpg" alt="25" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/26.jpg">
-                <img src="Mo chuisle pics/crazy one/26.jpg" alt="26" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/27.jpg">
-                <img src="Mo chuisle pics/crazy one/27.jpg" alt="27" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/28.jpg">
-                <img src="Mo chuisle pics/crazy one/28.jpg" alt="28" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/crazy one/29.jpg">
-                <img src="Mo chuisle pics/crazy one/29.jpg" alt="29" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>my favorite pics....</h2>
-              <a target="_blank" href="Mo chuisle pics/best pics/1.jpg">
-                <img src="Mo chuisle pics/best pics/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/2.jpg">
-                <img src="Mo chuisle pics/best pics/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/3.jpg">
-                <img src="Mo chuisle pics/best pics/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/4.jpg">
-                <img src="Mo chuisle pics/best pics/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/5.jpg">
-                <img src="Mo chuisle pics/best pics/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/6.jpg">
-                <img src="Mo chuisle pics/best pics/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/7.jpg">
-                <img src="Mo chuisle pics/best pics/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/8.jpg">
-                <img src="Mo chuisle pics/best pics/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/9.jpg">
-                <img src="Mo chuisle pics/best pics/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/10.jpg">
-                <img src="Mo chuisle pics/best pics/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/11.jpg">
-                <img src="Mo chuisle pics/best pics/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/12.jpg">
-                <img src="Mo chuisle pics/best pics/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/13.jpg">
-                <img src="Mo chuisle pics/best pics/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/14.jpg">
-                <img src="Mo chuisle pics/best pics/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/best pics/15.jpg">
-                <img src="Mo chuisle pics/best pics/15.jpg" alt="15" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>you might seem scary but i still love you the most....</h2>
-              <a target="_blank" href="Mo chuisle pics/dayan/1.jpg">
-                <img src="Mo chuisle pics/dayan/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/2.jpg">
-                <img src="Mo chuisle pics/dayan/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/3.jpg">
-                <img src="Mo chuisle pics/dayan/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/4.jpg">
-                <img src="Mo chuisle pics/dayan/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/5.jpg">
-                <img src="Mo chuisle pics/dayan/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/6.jpg">
-                <img src="Mo chuisle pics/dayan/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/7.jpg">
-                <img src="Mo chuisle pics/dayan/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/8.jpg">
-                <img src="Mo chuisle pics/dayan/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/9.jpg">
-                <img src="Mo chuisle pics/dayan/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/10.jpg">
-                <img src="Mo chuisle pics/dayan/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/11.jpg">
-                <img src="Mo chuisle pics/dayan/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/12.jpg">
-                <img src="Mo chuisle pics/dayan/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/13.jpg">
-                <img src="Mo chuisle pics/dayan/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/14.jpg">
-                <img src="Mo chuisle pics/dayan/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/15.jpg">
-                <img src="Mo chuisle pics/dayan/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/16.jpg">
-                <img src="Mo chuisle pics/dayan/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/17.jpg">
-                <img src="Mo chuisle pics/dayan/18.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/18.jpg">
-                <img src="Mo chuisle pics/dayan/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/dayan/19.jpg">
-                <img src="Mo chuisle pics/dayan/19.jpg" alt="19" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>you eating ....</h2>
-              <a target="_blank" href="Mo chuisle pics/eating/1.jpg">
-                <img src="Mo chuisle pics/eating/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/2.jpg">
-                <img src="Mo chuisle pics/eating/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/3.jpg">
-                <img src="Mo chuisle pics/eating/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/4.jpg">
-                <img src="Mo chuisle pics/eating/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/5.jpg">
-                <img src="Mo chuisle pics/eating/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/6.jpg">
-                <img src="Mo chuisle pics/eating/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/7.jpg">
-                <img src="Mo chuisle pics/eating/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/8.jpg">
-                <img src="Mo chuisle pics/eating/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/9.jpg">
-                <img src="Mo chuisle pics/eating/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/10.jpg">
-                <img src="Mo chuisle pics/eating/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/11.jpg">
-                <img src="Mo chuisle pics/eating/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/12.jpg">
-                <img src="Mo chuisle pics/eating/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/13.jpg">
-                <img src="Mo chuisle pics/eating/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/14.jpg">
-                <img src="Mo chuisle pics/eating/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/15.jpg">
-                <img src="Mo chuisle pics/eating/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/16.jpg">
-                <img src="Mo chuisle pics/eating/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/17.jpg">
-                <img src="Mo chuisle pics/eating/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/18.jpg">
-                <img src="Mo chuisle pics/eating/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/19.jpg">
-                <img src="Mo chuisle pics/eating/19.jpg" alt="19" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/20.jpg">
-                <img src="Mo chuisle pics/eating/20.jpg" alt="20" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/21.jpg">
-                <img src="Mo chuisle pics/eating/21.jpg" alt="21" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/22.jpg">
-                <img src="Mo chuisle pics/eating/22.jpg" alt="22" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/eating/23.jpg">
-                <img src="Mo chuisle pics/eating/23.jpg" alt="23" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>your fav dress....</h2>
-              <a target="_blank" href="Mo chuisle pics/fav dress/1.jpg">
-                <img src="Mo chuisle pics/fav dress/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/fav dress/2.jpg">
-                <img src="Mo chuisle pics/fav dress/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/fav dress/3.jpg">
-                <img src="Mo chuisle pics/fav dress/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/fav dress/4.jpg">
-                <img src="Mo chuisle pics/fav dress/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/fav dress/5.jpg">
-                <img src="Mo chuisle pics/fav dress/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/fav dress/6.jpg">
-                <img src="Mo chuisle pics/fav dress/6.jpg" alt="6" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>all the sad times....</h2>
-              <a target="_blank" href="Mo chuisle pics/hurt/1.jpg">
-                <img src="Mo chuisle pics/hurt/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/2.jpg">
-                <img src="Mo chuisle pics/hurt/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/3.jpg">
-                <img src="Mo chuisle pics/hurt/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/4.jpg">
-                <img src="Mo chuisle pics/hurt/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/5.jpg">
-                <img src="Mo chuisle pics/hurt/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/6.jpg">
-                <img src="Mo chuisle pics/hurt/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/7.jpg">
-                <img src="Mo chuisle pics/hurt/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/8.jpg">
-                <img src="Mo chuisle pics/hurt/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/9.jpg">
-                <img src="Mo chuisle pics/hurt/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/10.jpg">
-                <img src="Mo chuisle pics/hurt/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/11.jpg">
-                <img src="Mo chuisle pics/hurt/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/12.jpg">
-                <img src="Mo chuisle pics/hurt/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/13.jpg">
-                <img src="Mo chuisle pics/hurt/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/14.jpg">
-                <img src="Mo chuisle pics/hurt/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/15.jpg">
-                <img src="Mo chuisle pics/hurt/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/16.jpg">
-                <img src="Mo chuisle pics/hurt/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/17.jpg">
-                <img src="Mo chuisle pics/hurt/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/hurt/18.jpg">
-                <img src="Mo chuisle pics/hurt/18.jpg" alt="18" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>iit tour....</h2>
-              <a target="_blank" href="Mo chuisle pics/iit bombay/1.jpg">
-                <img src="Mo chuisle pics/iit bombay/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/iit bombay/2.jpg">
-                <img src="Mo chuisle pics/iit bombay/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/iit bombay/3.jpg">
-                <img src="Mo chuisle pics/iit bombay/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/iit bombay/4.jpg">
-                <img src="Mo chuisle pics/iit bombay/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/iit bombay/5.jpg">
-                <img src="Mo chuisle pics/iit bombay/5.jpg" alt="5" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>things of my love....</h2>
-              <h4>your ring and the pendant</h4>
-              <a target="_blank" href="Mo chuisle pics/my gift/1.jpeg">
-                <img src="Mo chuisle pics/my gift/1.jpeg" alt="1" >
-              </a>
-              <h4>i love your hair</h4>
-              <a target="_blank" href="Mo chuisle pics/random/8.jpg">
-                <img src="Mo chuisle pics/random/8.jpg" alt="1" >
-              </a>
-              <h4>you look funny now</h4>
-              <a target="_blank" href="Mo chuisle pics/random/6.jpg">
-                <img src="Mo chuisle pics/random/6.jpg" alt="1" >
-              </a>
-              <h4>soooo cute</h4>
-              <a target="_blank" href="Mo chuisle pics/random/9.jpg">
-                <img src="Mo chuisle pics/random/9.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/10.jpg">
-                <img src="Mo chuisle pics/random/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/11.jpg">
-                <img src="Mo chuisle pics/random/11.jpg" alt="11" >
-              </a>
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>baby....</h2>
-              <a target="_blank" href="Mo chuisle pics/random/1.jpg">
-                <img src="Mo chuisle pics/random/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/2.jpg">
-                <img src="Mo chuisle pics/random/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/3.jpg">
-                <img src="Mo chuisle pics/random/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/4.jpg">
-                <img src="Mo chuisle pics/random/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/random/5.jpg">
-                <img src="Mo chuisle pics/random/5.jpg" alt="5" >
-              </a>
-            </div>
-          </div>
-          <div class="container left">
-            <div class="content">
-              <h2>best zoom class....</h2>
-              <a target="_blank" href="Mo chuisle pics/zoom/1.jpg">
-                <img src="Mo chuisle pics/zoom/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/2.jpg">
-                <img src="Mo chuisle pics/zoom/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/3.jpg">
-                <img src="Mo chuisle pics/zoom/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/4.jpg">
-                <img src="Mo chuisle pics/zoom/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/5.jpg">
-                <img src="Mo chuisle pics/zoom/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/6.jpg">
-                <img src="Mo chuisle pics/zoom/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/7.jpg">
-                <img src="Mo chuisle pics/zoom/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/8.jpg">
-                <img src="Mo chuisle pics/zoom/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/9.jpg">
-                <img src="Mo chuisle pics/zoom/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/10.jpg">
-                <img src="Mo chuisle pics/zoom/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/11.jpg">
-                <img src="Mo chuisle pics/zoom/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/12.jpg">
-                <img src="Mo chuisle pics/zoom/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/13.jpg">
-                <img src="Mo chuisle pics/zoom/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/14.jpg">
-                <img src="Mo chuisle pics/zoom/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/zoom/15.jpg">
-                <img src="Mo chuisle pics/zoom/15.jpg" alt="15" >
-              </a>
-
-            </div>
-          </div>
-          <div class="container right">
-            <div class="content">
-              <h2>your smile is just....</h2>
-              <a target="_blank" href="Mo chuisle pics/smile2/1.jpg">
-                <img src="Mo chuisle pics/smile2/1.jpg" alt="1" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/2.jpg">
-                <img src="Mo chuisle pics/smile2/2.jpg" alt="2" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/3.jpg">
-                <img src="Mo chuisle pics/smile2/3.jpg" alt="3" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/4.jpg">
-                <img src="Mo chuisle pics/smile2/4.jpg" alt="4" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/5.jpg">
-                <img src="Mo chuisle pics/smile2/5.jpg" alt="5" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/6.jpg">
-                <img src="Mo chuisle pics/smile2/6.jpg" alt="6" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/7.jpg">
-                <img src="Mo chuisle pics/smile2/7.jpg" alt="7" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/8.jpg">
-                <img src="Mo chuisle pics/smile2/8.jpg" alt="8" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/9.jpg">
-                <img src="Mo chuisle pics/smile2/9.jpg" alt="9" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/10.jpg">
-                <img src="Mo chuisle pics/smile2/10.jpg" alt="10" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/11.jpg">
-                <img src="Mo chuisle pics/smile2/11.jpg" alt="11" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/12.jpg">
-                <img src="Mo chuisle pics/smile2/12.jpg" alt="12" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/13.jpg">
-                <img src="Mo chuisle pics/smile2/13.jpg" alt="13" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/14.jpg">
-                <img src="Mo chuisle pics/smile2/14.jpg" alt="14" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/15.jpg">
-                <img src="Mo chuisle pics/smile2/15.jpg" alt="15" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/16.jpg">
-                <img src="Mo chuisle pics/smile2/16.jpg" alt="16" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/17.jpg">
-                <img src="Mo chuisle pics/smile2/17.jpg" alt="17" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/18.jpg">
-                <img src="Mo chuisle pics/smile2/18.jpg" alt="18" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/19.jpg">
-                <img src="Mo chuisle pics/smile2/19.jpg" alt="19" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/20.jpg">
-                <img src="Mo chuisle pics/smile2/20.jpg" alt="20" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/21.jpg">
-                <img src="Mo chuisle pics/smile2/21.jpg" alt="21" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/22.jpg">
-                <img src="Mo chuisle pics/smile2/22.jpg" alt="22" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/23.jpg">
-                <img src="Mo chuisle pics/smile2/23.jpg" alt="23" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/24.jpg">
-                <img src="Mo chuisle pics/smile2/24.jpg" alt="24" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/25.jpg">
-                <img src="Mo chuisle pics/smile2/25.jpg" alt="25" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/26.jpg">
-                <img src="Mo chuisle pics/smile2/26.jpg" alt="26" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/27.jpg">
-                <img src="Mo chuisle pics/smile2/27.jpg" alt="27" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/28.jpg">
-                <img src="Mo chuisle pics/smile2/28.jpg" alt="28" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/29.jpg">
-                <img src="Mo chuisle pics/smile2/29.jpg" alt="29" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/30.jpg">
-                <img src="Mo chuisle pics/smile2/30.jpg" alt="30" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/31.jpg">
-                <img src="Mo chuisle pics/smile2/31.jpg" alt="31" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/32.jpg">
-                <img src="Mo chuisle pics/smile2/32.jpg" alt="32" >
-              </a>
-              <a target="_blank" href="Mo chuisle pics/smile2/33.jpg">
-                <img src="Mo chuisle pics/smile2/33.jpg" alt="33" >
-              </a>
-            </div>
-          </div>
+  <body>
+    <div style="color: white;">
+      <h1 style="color:white; text-align: center;">Hey Sexy,</h1>
+      <h2 style="color: red; text-align: center;"> I Love You...</h2>
+      <pre style="text-align: center;font-size: large;"><span style="color: red;">I love you</span> means that I accept you for the person that you are, 
+        and that I do not wish to change you into someone else.
+        It means that I will love you and stand by you even through the worst of times.
+        It means loving you even when you’re in a bad mood, or too tired to do the things I want to do.
+        It means loving you when you’re down, not just when you’re fun to be with.
+       <span style="color: red;">I love you</span> means that I know your deepest secrets and do not judge you for them,
+        asking in return that you do not judge me for mine. 
+        It means that I care enough to fight for what we have and that I love you enough not to let go.
+        It means thinking of you, dreaming of you, wanting and needing you constantly, 
+        and hoping you feel the same way for me</pre>
+    </div>
+    <div class="timeline">
+      <div class="container left">
+        <div class="content">
+          <h2>i just love you very very much....</h2>
+          <a target="_blank" href="Mo chuisle pics/my fav.jpg">
+            <img src="Mo chuisle pics/my fav.jpg" alt="1">
+          </a>
         </div>
-</body>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color:purple;">7.8 billion smiles in the world and yours in the one that sets my heart on fire...</h2>
+          <a target="_blank" href="Mo chuisle pics/smile/1.jpg">
+            <img src="Mo chuisle pics/smile/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/2.jpg">
+            <img src="Mo chuisle pics/smile/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/3.jpg">
+            <img src="Mo chuisle pics/smile/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/4.jpg">
+            <img src="Mo chuisle pics/smile/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/5.jpg">
+            <img src="Mo chuisle pics/smile/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/6.jpg">
+            <img src="Mo chuisle pics/smile/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/7.jpg">
+            <img src="Mo chuisle pics/smile/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/8.jpg">
+            <img src="Mo chuisle pics/smile/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/9.jpg">
+            <img src="Mo chuisle pics/smile/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/10.jpg">
+            <img src="Mo chuisle pics/smile/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/11.jpg">
+            <img src="Mo chuisle pics/smile/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/12.jpg">
+            <img src="Mo chuisle pics/smile/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/13.jpg">
+            <img src="Mo chuisle pics/smile/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/14.jpg">
+            <img src="Mo chuisle pics/smile/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/15.jpg">
+            <img src="Mo chuisle pics/smile/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/16.jpg">
+            <img src="Mo chuisle pics/smile/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/17.jpg">
+            <img src="Mo chuisle pics/smile/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/18.jpg">
+            <img src="Mo chuisle pics/smile/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/19.jpg">
+            <img src="Mo chuisle pics/smile/19.jpg" alt="19">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/20.jpg">
+            <img src="Mo chuisle pics/smile/20.jpg" alt="20">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/21.jpg">
+            <img src="Mo chuisle pics/smile/21.jpg" alt="21">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/22.jpg">
+            <img src="Mo chuisle pics/smile/22.jpg" alt="22">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/23.jpg">
+            <img src="Mo chuisle pics/smile/23.jpg" alt="23">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/24.jpg">
+            <img src="Mo chuisle pics/smile/24.jpg" alt="24">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/25.jpg">
+            <img src="Mo chuisle pics/smile/25.jpg" alt="25">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/26.jpg">
+            <img src="Mo chuisle pics/smile/26.jpg" alt="26">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/27.jpg">
+            <img src="Mo chuisle pics/smile/27.jpg" alt="27">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/28.jpg">
+            <img src="Mo chuisle pics/smile/28.jpg" alt="28">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/29.jpg">
+            <img src="Mo chuisle pics/smile/29.jpg" alt="29">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/30.jpg">
+            <img src="Mo chuisle pics/smile/30.jpg" alt="30">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/31.jpg">
+            <img src="Mo chuisle pics/smile/31.jpg" alt="31">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/32.jpg">
+            <img src="Mo chuisle pics/smile/32.jpg" alt="32">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/33.jpg">
+            <img src="Mo chuisle pics/smile/33.jpg" alt="33">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/34.jpg">
+            <img src="Mo chuisle pics/smile/34.jpg" alt="34">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile/35.jpg">
+            <img src="Mo chuisle pics/smile/35.jpg" alt="35">
+          </a>
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">Since you have walked into my life now I see why it didnt work out with anyone else....</h2>
+          <a target="_blank" href="Mo chuisle pics/before me/1.jpg">
+            <img src="Mo chuisle pics/before me/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/2.jpg">
+            <img src="Mo chuisle pics/before me/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/3.jpg">
+            <img src="Mo chuisle pics/before me/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/4.jpg">
+            <img src="Mo chuisle pics/before me/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/5.jpg">
+            <img src="Mo chuisle pics/before me/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/6.jpg">
+            <img src="Mo chuisle pics/before me/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/7.jpg">
+            <img src="Mo chuisle pics/before me/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/8.jpg">
+            <img src="Mo chuisle pics/before me/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/9.jpg">
+            <img src="Mo chuisle pics/before me/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/10.jpg">
+            <img src="Mo chuisle pics/before me/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/11.jpg">
+            <img src="Mo chuisle pics/before me/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/12.jpg">
+            <img src="Mo chuisle pics/before me/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/13.jpg">
+            <img src="Mo chuisle pics/before me/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/14.jpg">
+            <img src="Mo chuisle pics/before me/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/15.jpg">
+            <img src="Mo chuisle pics/before me/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/before me/16.jpg">
+            <img src="Mo chuisle pics/before me/16.jpg" alt="16">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">O my octopus...</h2>
+          <h2 style="color: purple;">Now I cant explain to you how amzing it feels when you hug</h2>
+          <a target="_blank" href="Mo chuisle pics/my octopus/1.jpg">
+            <img src="Mo chuisle pics/my octopus/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/2.jpg">
+            <img src="Mo chuisle pics/my octopus/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/3.jpg">
+            <img src="Mo chuisle pics/my octopus/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/4.jpg">
+            <img src="Mo chuisle pics/my octopus/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/5.jpg">
+            <img src="Mo chuisle pics/my octopus/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/6.jpg">
+            <img src="Mo chuisle pics/my octopus/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/7.jpg">
+            <img src="Mo chuisle pics/my octopus/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/8.jpg">
+            <img src="Mo chuisle pics/my octopus/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my octopus/9.jpg">
+            <img src="Mo chuisle pics/my octopus/9.jpg" alt="9">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">Its the little things that matter that most....</h2>
+          <a target="_blank" href="Mo chuisle pics/painting/1.jpg">
+            <img src="Mo chuisle pics/painting/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/2.jpg">
+            <img src="Mo chuisle pics/painting/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/3.jpg">
+            <img src="Mo chuisle pics/painting/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/4.jpg">
+            <img src="Mo chuisle pics/painting/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/5.jpg">
+            <img src="Mo chuisle pics/painting/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/6.jpg">
+            <img src="Mo chuisle pics/painting/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/7.jpg">
+            <img src="Mo chuisle pics/painting/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/8.jpg">
+            <img src="Mo chuisle pics/painting/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/9.jpg">
+            <img src="Mo chuisle pics/painting/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/10.jpg">
+            <img src="Mo chuisle pics/painting/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/11.jpg">
+            <img src="Mo chuisle pics/painting/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/12.jpg">
+            <img src="Mo chuisle pics/painting/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/13.jpg">
+            <img src="Mo chuisle pics/painting/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/14.jpg">
+            <img src="Mo chuisle pics/painting/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/15.jpg">
+            <img src="Mo chuisle pics/painting/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/16.jpg">
+            <img src="Mo chuisle pics/painting/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/17.jpg">
+            <img src="Mo chuisle pics/painting/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/painting/18.jpg">
+            <img src="Mo chuisle pics/painting/18.jpg" alt="18">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">You can call me rain for all I seem to do is always fall for you....</h2>
+          <a target="_blank" href="Mo chuisle pics/raining/1.jpg">
+            <img src="Mo chuisle pics/raining/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/2.jpg">
+            <img src="Mo chuisle pics/raining/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/3.jpg">
+            <img src="Mo chuisle pics/raining/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/4.jpg">
+            <img src="Mo chuisle pics/raining/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/5.jpg">
+            <img src="Mo chuisle pics/raining/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/6.jpg">
+            <img src="Mo chuisle pics/raining/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/7.jpg">
+            <img src="Mo chuisle pics/raining/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/8.jpg">
+            <img src="Mo chuisle pics/raining/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/raining/9.jpg">
+            <img src="Mo chuisle pics/raining/9.jpg" alt="9">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">&#128538 Just a auto ride &#128521...</h2>
+          <a target="_blank" href="Mo chuisle pics/auto moments/1.jpg">
+            <img src="Mo chuisle pics/auto moments/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/auto moments/2.jpg">
+            <img src="Mo chuisle pics/auto moments/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/auto moments/3.jpg">
+            <img src="Mo chuisle pics/auto moments/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/auto moments/4.jpg">
+            <img src="Mo chuisle pics/auto moments/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/auto moments/5.jpg">
+            <img src="Mo chuisle pics/auto moments/5.jpg" alt="5">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">&#128538 Just a plane ride &#128521...</h2>
+          <a target="_blank" href="Mo chuisle pics/plane moments/1.jpg">
+            <img src="Mo chuisle pics/plane moments/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/plane moments/2.jpg">
+            <img src="Mo chuisle pics/plane moments/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/plane moments/3.jpg">
+            <img src="Mo chuisle pics/plane moments/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/plane moments/4.jpg">
+            <img src="Mo chuisle pics/plane moments/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/plane moments/5.jpg">
+            <img src="Mo chuisle pics/plane moments/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/plane moments/6.jpg">
+            <img src="Mo chuisle pics/plane moments/6.jpg" alt="6">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">So my babe did the haircut today&#128514...</h2>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/1.jpg">
+            <img src="Mo chuisle pics/my haiorcut/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/2.jpg">
+            <img src="Mo chuisle pics/my haiorcut/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/3.jpg">
+            <img src="Mo chuisle pics/my haiorcut/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/4.jpg">
+            <img src="Mo chuisle pics/my haiorcut/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/5.jpg">
+            <img src="Mo chuisle pics/my haiorcut/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/6.jpg">
+            <img src="Mo chuisle pics/my haiorcut/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/7.jpg">
+            <img src="Mo chuisle pics/my haiorcut/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/8.jpg">
+            <img src="Mo chuisle pics/my haiorcut/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/9.jpg">
+            <img src="Mo chuisle pics/my haiorcut/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/10.jpg">
+            <img src="Mo chuisle pics/my haiorcut/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/11.jpg">
+            <img src="Mo chuisle pics/my haiorcut/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/12.jpg">
+            <img src="Mo chuisle pics/my haiorcut/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/13.jpg">
+            <img src="Mo chuisle pics/my haiorcut/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/14.jpg">
+            <img src="Mo chuisle pics/my haiorcut/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/15.jpg">
+            <img src="Mo chuisle pics/my haiorcut/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/16.jpg">
+            <img src="Mo chuisle pics/my haiorcut/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/17.jpg">
+            <img src="Mo chuisle pics/my haiorcut/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/18.jpg">
+            <img src="Mo chuisle pics/my haiorcut/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/my haiorcut/19.jpg">
+            <img src="Mo chuisle pics/my haiorcut/19.jpg" alt="19">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">It's better to be absolutely crazy than to be absolutely boring.I will never find someone as crazy as you...</h2>
+          <a target="_blank" href="Mo chuisle pics/crazy one/1.jpg">
+            <img src="Mo chuisle pics/crazy one/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/2.jpg">
+            <img src="Mo chuisle pics/crazy one/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/3.jpg">
+            <img src="Mo chuisle pics/crazy one/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/4.jpg">
+            <img src="Mo chuisle pics/crazy one/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/5.jpg">
+            <img src="Mo chuisle pics/crazy one/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/6.jpg">
+            <img src="Mo chuisle pics/crazy one/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/7.jpg">
+            <img src="Mo chuisle pics/crazy one/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/8.jpg">
+            <img src="Mo chuisle pics/crazy one/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/9.jpg">
+            <img src="Mo chuisle pics/crazy one/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/10.jpg">
+            <img src="Mo chuisle pics/crazy one/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/11.jpg">
+            <img src="Mo chuisle pics/crazy one/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/12.jpg">
+            <img src="Mo chuisle pics/crazy one/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/13.jpg">
+            <img src="Mo chuisle pics/crazy one/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/14.jpg">
+            <img src="Mo chuisle pics/crazy one/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/15.jpg">
+            <img src="Mo chuisle pics/crazy one/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/16.jpg">
+            <img src="Mo chuisle pics/crazy one/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/17.jpg">
+            <img src="Mo chuisle pics/crazy one/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/18.jpg">
+            <img src="Mo chuisle pics/crazy one/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/19.jpg">
+            <img src="Mo chuisle pics/crazy one/19.jpg" alt="19">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/20.jpg">
+            <img src="Mo chuisle pics/crazy one/20.jpg" alt="20">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/21.jpg">
+            <img src="Mo chuisle pics/crazy one/21.jpg" alt="21">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/22.jpg">
+            <img src="Mo chuisle pics/crazy one/22.jpg" alt="22">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/23.jpg">
+            <img src="Mo chuisle pics/crazy one/23.jpg" alt="23">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/24.jpg">
+            <img src="Mo chuisle pics/crazy one/24.jpg" alt="24">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/25.jpg">
+            <img src="Mo chuisle pics/crazy one/25.jpg" alt="25">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/26.jpg">
+            <img src="Mo chuisle pics/crazy one/26.jpg" alt="26">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/27.jpg">
+            <img src="Mo chuisle pics/crazy one/27.jpg" alt="27">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/28.jpg">
+            <img src="Mo chuisle pics/crazy one/28.jpg" alt="28">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/crazy one/29.jpg">
+            <img src="Mo chuisle pics/crazy one/29.jpg" alt="29">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">My favorite pics&#128525&#128525&#128525....</h2>
+          <a target="_blank" href="Mo chuisle pics/best pics/1.jpg">
+            <img src="Mo chuisle pics/best pics/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/2.jpg">
+            <img src="Mo chuisle pics/best pics/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/3.jpg">
+            <img src="Mo chuisle pics/best pics/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/4.jpg">
+            <img src="Mo chuisle pics/best pics/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/5.jpg">
+            <img src="Mo chuisle pics/best pics/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/6.jpg">
+            <img src="Mo chuisle pics/best pics/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/7.jpg">
+            <img src="Mo chuisle pics/best pics/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/8.jpg">
+            <img src="Mo chuisle pics/best pics/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/9.jpg">
+            <img src="Mo chuisle pics/best pics/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/10.jpg">
+            <img src="Mo chuisle pics/best pics/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/11.jpg">
+            <img src="Mo chuisle pics/best pics/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/12.jpg">
+            <img src="Mo chuisle pics/best pics/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/13.jpg">
+            <img src="Mo chuisle pics/best pics/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/best pics/14.jpg">
+            <img src="Mo chuisle pics/best pics/14.jpg" alt="14">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color:purple;">You might look scary like a daayan BUT I will still love you the most...</h2>
+          <a target="_blank" href="Mo chuisle pics/dayan/1.jpg">
+            <img src="Mo chuisle pics/dayan/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/2.jpg">
+            <img src="Mo chuisle pics/dayan/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/3.jpg">
+            <img src="Mo chuisle pics/dayan/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/4.jpg">
+            <img src="Mo chuisle pics/dayan/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/5.jpg">
+            <img src="Mo chuisle pics/dayan/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/6.jpg">
+            <img src="Mo chuisle pics/dayan/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/7.jpg">
+            <img src="Mo chuisle pics/dayan/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/8.jpg">
+            <img src="Mo chuisle pics/dayan/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/9.jpg">
+            <img src="Mo chuisle pics/dayan/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/10.jpg">
+            <img src="Mo chuisle pics/dayan/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/11.jpg">
+            <img src="Mo chuisle pics/dayan/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/12.jpg">
+            <img src="Mo chuisle pics/dayan/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/13.jpg">
+            <img src="Mo chuisle pics/dayan/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/14.jpg">
+            <img src="Mo chuisle pics/dayan/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/15.jpg">
+            <img src="Mo chuisle pics/dayan/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/16.jpg">
+            <img src="Mo chuisle pics/dayan/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/17.jpg">
+            <img src="Mo chuisle pics/dayan/18.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/18.jpg">
+            <img src="Mo chuisle pics/dayan/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/dayan/19.jpg">
+            <img src="Mo chuisle pics/dayan/19.jpg" alt="19">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color:purple;">After the infinitely many unsuccessful dedicated attempts of people.You Eating...</h2>
+          <a target="_blank" href="Mo chuisle pics/eating/1.jpg">
+            <img src="Mo chuisle pics/eating/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/2.jpg">
+            <img src="Mo chuisle pics/eating/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/3.jpg">
+            <img src="Mo chuisle pics/eating/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/4.jpg">
+            <img src="Mo chuisle pics/eating/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/5.jpg">
+            <img src="Mo chuisle pics/eating/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/6.jpg">
+            <img src="Mo chuisle pics/eating/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/7.jpg">
+            <img src="Mo chuisle pics/eating/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/8.jpg">
+            <img src="Mo chuisle pics/eating/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/9.jpg">
+            <img src="Mo chuisle pics/eating/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/10.jpg">
+            <img src="Mo chuisle pics/eating/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/11.jpg">
+            <img src="Mo chuisle pics/eating/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/12.jpg">
+            <img src="Mo chuisle pics/eating/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/13.jpg">
+            <img src="Mo chuisle pics/eating/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/14.jpg">
+            <img src="Mo chuisle pics/eating/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/15.jpg">
+            <img src="Mo chuisle pics/eating/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/16.jpg">
+            <img src="Mo chuisle pics/eating/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/17.jpg">
+            <img src="Mo chuisle pics/eating/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/18.jpg">
+            <img src="Mo chuisle pics/eating/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/19.jpg">
+            <img src="Mo chuisle pics/eating/19.jpg" alt="19">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/20.jpg">
+            <img src="Mo chuisle pics/eating/20.jpg" alt="20">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/21.jpg">
+            <img src="Mo chuisle pics/eating/21.jpg" alt="21">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/22.jpg">
+            <img src="Mo chuisle pics/eating/22.jpg" alt="22">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/eating/23.jpg">
+            <img src="Mo chuisle pics/eating/23.jpg" alt="23">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">Oh ya your favorite dress&#128514&#128514&#128514...</h2>
+          <a target="_blank" href="Mo chuisle pics/fav dress/1.jpg">
+            <img src="Mo chuisle pics/fav dress/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/fav dress/2.jpg">
+            <img src="Mo chuisle pics/fav dress/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/fav dress/3.jpg">
+            <img src="Mo chuisle pics/fav dress/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/fav dress/4.jpg">
+            <img src="Mo chuisle pics/fav dress/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/fav dress/5.jpg">
+            <img src="Mo chuisle pics/fav dress/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/fav dress/6.jpg">
+            <img src="Mo chuisle pics/fav dress/6.jpg" alt="6">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">Well life cant be all good all the time but in the end everthing becomes fine...</h2>
+          <a target="_blank" href="Mo chuisle pics/hurt/1.jpg">
+            <img src="Mo chuisle pics/hurt/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/2.jpg">
+            <img src="Mo chuisle pics/hurt/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/3.jpg">
+            <img src="Mo chuisle pics/hurt/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/4.jpg">
+            <img src="Mo chuisle pics/hurt/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/5.jpg">
+            <img src="Mo chuisle pics/hurt/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/6.jpg">
+            <img src="Mo chuisle pics/hurt/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/7.jpg">
+            <img src="Mo chuisle pics/hurt/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/8.jpg">
+            <img src="Mo chuisle pics/hurt/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/9.jpg">
+            <img src="Mo chuisle pics/hurt/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/10.jpg">
+            <img src="Mo chuisle pics/hurt/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/11.jpg">
+            <img src="Mo chuisle pics/hurt/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/12.jpg">
+            <img src="Mo chuisle pics/hurt/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/13.jpg">
+            <img src="Mo chuisle pics/hurt/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/14.jpg">
+            <img src="Mo chuisle pics/hurt/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/15.jpg">
+            <img src="Mo chuisle pics/hurt/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/16.jpg">
+            <img src="Mo chuisle pics/hurt/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/17.jpg">
+            <img src="Mo chuisle pics/hurt/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/hurt/18.jpg">
+            <img src="Mo chuisle pics/hurt/18.jpg" alt="18">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">IIT visits&#128526...</h2>
+          <a target="_blank" href="Mo chuisle pics/iit bombay/1.jpg">
+            <img src="Mo chuisle pics/iit bombay/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/iit bombay/2.jpg">
+            <img src="Mo chuisle pics/iit bombay/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/iit bombay/3.jpg">
+            <img src="Mo chuisle pics/iit bombay/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/iit bombay/4.jpg">
+            <img src="Mo chuisle pics/iit bombay/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/iit bombay/5.jpg">
+            <img src="Mo chuisle pics/iit bombay/5.jpg" alt="5">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">Things of memories....</h2>
+          <h4 style="color: purple;">Your ring and the pendant&#128525</h4>
+          <a target="_blank" href="Mo chuisle pics/my gift/1.jpeg">
+            <img src="Mo chuisle pics/my gift/1.jpeg" alt="1">
+          </a>
+          <h4 style="color: purple;">I love your hair&#128525</h4>
+          <a target="_blank" href="Mo chuisle pics/random/8.jpg">
+            <img src="Mo chuisle pics/random/8.jpg" alt="1">
+          </a>
+          <h4 style="color: purple;">Now that looks really funny&#128514</h4>
+          <a target="_blank" href="Mo chuisle pics/random/6.jpg">
+            <img src="Mo chuisle pics/random/6.jpg" alt="1">
+          </a>
+          <h4 style="color: purple;">You are just so cute&#128525&#128525&#128525</h4>
+          <a target="_blank" href="Mo chuisle pics/random/9.jpg">
+            <img src="Mo chuisle pics/random/9.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/10.jpg">
+            <img src="Mo chuisle pics/random/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/11.jpg">
+            <img src="Mo chuisle pics/random/11.jpg" alt="11">
+          </a>
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">Look at the cute little baby,how can a person not love you...</h2>
+          <a target="_blank" href="Mo chuisle pics/random/1.jpg">
+            <img src="Mo chuisle pics/random/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/2.jpg">
+            <img src="Mo chuisle pics/random/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/3.jpg">
+            <img src="Mo chuisle pics/random/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/4.jpg">
+            <img src="Mo chuisle pics/random/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/random/5.jpg">
+            <img src="Mo chuisle pics/random/5.jpg" alt="5">
+          </a>
+        </div>
+      </div>
+      <div class="container left">
+        <div class="content">
+          <h2 style="color: purple;">I guess this is the only zoom class lecture that i liked in the whole lockdown&#128522...</h2>
+          <a target="_blank" href="Mo chuisle pics/zoom/1.jpg">
+            <img src="Mo chuisle pics/zoom/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/2.jpg">
+            <img src="Mo chuisle pics/zoom/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/3.jpg">
+            <img src="Mo chuisle pics/zoom/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/4.jpg">
+            <img src="Mo chuisle pics/zoom/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/5.jpg">
+            <img src="Mo chuisle pics/zoom/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/6.jpg">
+            <img src="Mo chuisle pics/zoom/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/7.jpg">
+            <img src="Mo chuisle pics/zoom/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/8.jpg">
+            <img src="Mo chuisle pics/zoom/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/9.jpg">
+            <img src="Mo chuisle pics/zoom/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/10.jpg">
+            <img src="Mo chuisle pics/zoom/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/11.jpg">
+            <img src="Mo chuisle pics/zoom/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/12.jpg">
+            <img src="Mo chuisle pics/zoom/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/13.jpg">
+            <img src="Mo chuisle pics/zoom/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/14.jpg">
+            <img src="Mo chuisle pics/zoom/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/zoom/15.jpg">
+            <img src="Mo chuisle pics/zoom/15.jpg" alt="15">
+          </a>
+
+        </div>
+      </div>
+      <div class="container right">
+        <div class="content">
+          <h2 style="color: purple;">You have no idea how hard it is to force myself to stop thinking about you sometimes...</h2>
+          <a target="_blank" href="Mo chuisle pics/smile2/1.jpg">
+            <img src="Mo chuisle pics/smile2/1.jpg" alt="1">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/2.jpg">
+            <img src="Mo chuisle pics/smile2/2.jpg" alt="2">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/3.jpg">
+            <img src="Mo chuisle pics/smile2/3.jpg" alt="3">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/4.jpg">
+            <img src="Mo chuisle pics/smile2/4.jpg" alt="4">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/5.jpg">
+            <img src="Mo chuisle pics/smile2/5.jpg" alt="5">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/6.jpg">
+            <img src="Mo chuisle pics/smile2/6.jpg" alt="6">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/7.jpg">
+            <img src="Mo chuisle pics/smile2/7.jpg" alt="7">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/8.jpg">
+            <img src="Mo chuisle pics/smile2/8.jpg" alt="8">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/9.jpg">
+            <img src="Mo chuisle pics/smile2/9.jpg" alt="9">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/10.jpg">
+            <img src="Mo chuisle pics/smile2/10.jpg" alt="10">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/11.jpg">
+            <img src="Mo chuisle pics/smile2/11.jpg" alt="11">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/12.jpg">
+            <img src="Mo chuisle pics/smile2/12.jpg" alt="12">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/13.jpg">
+            <img src="Mo chuisle pics/smile2/13.jpg" alt="13">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/14.jpg">
+            <img src="Mo chuisle pics/smile2/14.jpg" alt="14">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/15.jpg">
+            <img src="Mo chuisle pics/smile2/15.jpg" alt="15">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/16.jpg">
+            <img src="Mo chuisle pics/smile2/16.jpg" alt="16">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/17.jpg">
+            <img src="Mo chuisle pics/smile2/17.jpg" alt="17">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/18.jpg">
+            <img src="Mo chuisle pics/smile2/18.jpg" alt="18">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/19.jpg">
+            <img src="Mo chuisle pics/smile2/19.jpg" alt="19">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/20.jpg">
+            <img src="Mo chuisle pics/smile2/20.jpg" alt="20">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/21.jpg">
+            <img src="Mo chuisle pics/smile2/21.jpg" alt="21">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/22.jpg">
+            <img src="Mo chuisle pics/smile2/22.jpg" alt="22">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/23.jpg">
+            <img src="Mo chuisle pics/smile2/23.jpg" alt="23">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/24.jpg">
+            <img src="Mo chuisle pics/smile2/24.jpg" alt="24">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/25.jpg">
+            <img src="Mo chuisle pics/smile2/25.jpg" alt="25">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/26.jpg">
+            <img src="Mo chuisle pics/smile2/26.jpg" alt="26">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/27.jpg">
+            <img src="Mo chuisle pics/smile2/27.jpg" alt="27">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/28.jpg">
+            <img src="Mo chuisle pics/smile2/28.jpg" alt="28">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/29.jpg">
+            <img src="Mo chuisle pics/smile2/29.jpg" alt="29">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/30.jpg">
+            <img src="Mo chuisle pics/smile2/30.jpg" alt="30">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/31.jpg">
+            <img src="Mo chuisle pics/smile2/31.jpg" alt="31">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/32.jpg">
+            <img src="Mo chuisle pics/smile2/32.jpg" alt="32">
+          </a>
+          <a target="_blank" href="Mo chuisle pics/smile2/33.jpg">
+            <img src="Mo chuisle pics/smile2/33.jpg" alt="33">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 style="color: red;text-align:left;">This is not the end...</h2>
+      <h2 style="color: white;text-align: center;font-size: larger;">पिक्चर अभी बाकी है</h2>
+      <div style="position:relative; padding-bottom:56.25%; padding-top:30px; height:0; overflow:hidden;">
+        <iframe  width="425" height="344" src="v.mp4" frameborder="0" allowfullscreen 
+            style="position:absolute; top:0; left:0; width:100%; height:100%;">
+        </iframe>
+      </div>
+    </div>
+  </body>
+
 </html>
